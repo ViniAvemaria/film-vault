@@ -103,3 +103,15 @@ main {
     text-align: center;
     word-wrap: break-word;
 }
+
+@media (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+}

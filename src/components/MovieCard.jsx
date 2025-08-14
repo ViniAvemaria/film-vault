@@ -4,7 +4,9 @@ function MovieCard({ movie }) {
     return (
         <>
             <div className="card-container">
-                <img src={movie.Poster} alt="movie poster" />
+                <div className="poster-wrapper">
+                    <img src={movie.Poster} alt="movie poster" />
+                </div>
                 <p>
                     {movie.Title} ({movie.Year})
                 </p>
