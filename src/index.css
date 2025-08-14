@@ -43,6 +43,10 @@ main {
     margin-top: 4rem;
 }
 
+.no-scroll {
+    overflow: hidden;
+}
+
 .loading-container,
 .error-container {
     display: flex;

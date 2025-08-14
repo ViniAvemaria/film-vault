@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
 import MovieInfo from "./MovieInfo";
@@ -34,6 +34,14 @@ function MovieList({ movieList }) {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (movieInfo) {
+            document.body.classList.add("no-scroll");
+        } else {
+            document.body.classList.remove("no-scroll");
+        }
+    }, [movieInfo]);
 
     return (
         <>
