@@ -55,6 +55,9 @@ function MovieInfo({ movieInfo, setMovieInfo }) {
                     <h4>
                         <span className="highlight">Actors</span> {movieInfo.Actors}
                     </h4>
+                    <h4>
+                        <span className="highlight">Awards</span> {movieInfo.Awards}
+                    </h4>
                 </div>
             </div>
         </div>
