@@ -1,3 +1,4 @@
+import posterUnavailable from "../assets/poster-unavailable.png";
 import { useState, useContext } from "react";
 import { FavoritesContext } from "../contexts/FavoritesContext";
 import "./MovieInfo.css";
@@ -31,7 +32,13 @@ function MovieInfo({ movieInfo, setMovieInfo }) {
                 </button>
             </div>
             <div className="info-card">
-                <img src={movieInfo.Poster} alt="movie poster" />
+                <img
+                    src={movieInfo.Poster !== "N/A" ? movieInfo.Poster : posterUnavailable}
+                    alt={`${movieInfo.Title} poster`}
+                    onError={(e) => {
+                        e.target.src = posterUnavailable;
+                    }}
+                />
                 <div className="details-wrapper">
                     <div>
                         <h2>{movieInfo.Title}</h2>

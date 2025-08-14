@@ -160,7 +160,9 @@ function App() {
                                         <i className="fa-solid fa-chevron-left"></i>
                                     </button>
                                     <p>
-                                        {currentPage} <span>/</span> {totalPages}
+                                        {currentPage}
+                                        <span>┃</span>
+                                        {totalPages}
                                     </p>
                                     <button onClick={nextPage}>
                                         <i className="fa-solid fa-chevron-right"></i>

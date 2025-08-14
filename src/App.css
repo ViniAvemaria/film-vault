@@ -23,6 +23,12 @@ header {
 
 h1 {
     color: var(--accent);
+    cursor: pointer;
+    transition: text-shadow 0.2s ease;
+}
+
+h1:hover {
+    text-shadow: 0 0 8px rgba(229, 9, 20, 0.6);
 }
 
 header button {
@@ -32,6 +38,11 @@ header button {
     background: none;
     border: none;
     cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+header button:hover {
+    color: var(--hover-accent);
 }
 
 header button::after {
@@ -122,8 +133,8 @@ header button.active::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    padding: 0.5rem 1rem;
+    gap: 1.5rem;
+    padding: 0.4rem 0.9rem;
     background-color: var(--secondary-bg);
     border: 1px solid var(--border);
     border-radius: 20px;
@@ -131,7 +142,15 @@ header button.active::after {
 }
 
 .page-buttons-container p {
+    display: flex;
+    align-items: center;
+    gap: 2px;
     font-size: 1.1rem;
+}
+
+.page-buttons-container span {
+    font-size: 1.2rem;
+    color: var(--accent);
 }
 
 .page-buttons-container button {
@@ -140,11 +159,11 @@ header button.active::after {
     color: var(--primary-text);
     font-size: 1rem;
     cursor: pointer;
+    transition: color 0.2s ease;
 }
 
-.page-buttons-container span,
-.page-buttons-container i {
-    color: var(--accent);
+.page-buttons-container button:hover {
+    color: var(--hover-accent);
 }
 
 .page-buttons-container i {
