@@ -1,12 +1,17 @@
-# React + Vite
+# Curso +PraTi - Atividade 5: Aplicação React consumindo a API do IMDB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é uma aplicação **React** desenvolvida como parte das atividades do curso _Dev Full Stack Júnior_ da +PraTi.
 
-Currently, two official plugins are available:
+O objetivo é permitir que usuários **busquem filmes**, **vejam detalhes** e **montem uma lista de favoritos**, consumindo a API pública **OMDb**. Durante o desenvolvimento foram aplicados conceitos como:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   Componentização e uso de **Hooks** (useState, useEffect, useContext)
+-   Consumo de APIs com **Axios**
+-   **Paginação** de resultados
+-   Persistência de dados no **localStorage**
+-   Tratamento de **erros** e estados de **loading**
 
-## Expanding the ESLint configuration
+## 🎬 Acesse a aplicação
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Você pode visualizar o projeto publicado através do GitHub Pages no link abaixo:
+
+🔗 [Film Vault](https://viniavemaria.github.io/film-vault/)
