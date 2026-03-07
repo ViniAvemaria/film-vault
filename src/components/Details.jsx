@@ -8,7 +8,7 @@ const Details = ({ id, setOpenDetails }) => {
 
     const [movie, setMovie] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [loaded, setLoaded] = useState(false);
+    const [posterLoaded, setPosterLoaded] = useState(false);
     const [bg, setBg] = useState(null);
 
     const fetchMovieDetails = async () => {
@@ -43,6 +43,8 @@ const Details = ({ id, setOpenDetails }) => {
     useEffect(() => {
         if (!movie) return;
 
+        if (!movie.backdrop_path) setBg("not_found");
+
         const img = new Image();
         const url = `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`;
         img.src = url;
@@ -55,23 +57,25 @@ const Details = ({ id, setOpenDetails }) => {
                 <Loading />
             ) : (
                 <>
-                    {!loaded && <Loading />}
+                    {!posterLoaded && <Loading />}
 
-                    <div
-                        className="absolute inset-0 bg-cover bg-center blur-md scale-105"
-                        style={{
-                            backgroundImage: bg
-                                ? `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url(${bg})`
-                                : "none",
-                        }}
-                    />
+                    {bg !== "not_found" && (
+                        <div
+                            className="absolute inset-0 bg-cover bg-center blur-md scale-105"
+                            style={{
+                                backgroundImage: bg
+                                    ? `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url(${bg})`
+                                    : "none",
+                            }}
+                        />
+                    )}
 
                     <div className="flex max-[876px]:flex-col gap-4 h-fit m-auto z-30 border max-w-225 border-border p-5 bg-card-bg rounded-lg">
                         <img
-                            className="object-contain max-w-80 place-self-center"
-                            src={`https://image.tmdb.org/t/p/w1280${movie.poster_path}`}
-                            alt={`${movie.title} poster`}
-                            onLoad={() => setLoaded(true)}
+                            className="object-contain max-w-80 max-[876px]:place-self-center"
+                            src={`${movie.poster_path ? `https://image.tmdb.org/t/p/w1280${movie.poster_path}` : "/film-vault/image_unavailable.png"}`}
+                            alt="Film's poster"
+                            onLoad={() => setPosterLoaded(true)}
                         />
 
                         <div className="flex flex-col gap-5">
