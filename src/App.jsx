@@ -1,191 +1,84 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import MovieList from "./components/MovieList";
-import { FavoritesContext } from "./contexts/FavoritesContext";
-import "./App.css";
+import Header from "./components/Header";
+import Carousel from "./components/Carousel";
+import MoviesGrid from "./components/MoviesGrid";
 
 function App() {
-    const { favorites } = useContext(FavoritesContext);
-    const [favoriteTab, setFavoriteTab] = useState(false);
-    const [movieName, setMovieName] = useState("");
-    const [searchInput, setSearchInput] = useState("");
-    const [movieList, setMovieList] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const inputRef = useRef(null);
+    const API_KEY = import.meta.env.VITE_TMDB_KEY;
 
-    const clearAndFocus = () => {
-        if (inputRef.current) {
-            inputRef.current.focus();
-        }
-        setSearchInput("");
-    };
+    const [popular, setPopular] = useState([]);
+    const [popularLoading, setPopularLoading] = useState(true);
 
-    const previousPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage((prev) => prev - 1);
-        }
-    };
+    const [topRated, setTopRated] = useState([]);
+    const [topRatedLoading, setTopRatedLoading] = useState(true);
 
-    const nextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage((prev) => prev + 1);
+    const [upcoming, setUpcoming] = useState([]);
+    const [upcomingLoading, setUpcomingLoading] = useState(true);
+
+    const [activeTab, setActiveTab] = useState("home");
+
+    const fetchMovies = async (endpoint, setMovies, setLoading) => {
+        try {
+            const res = await axios.get(`https://api.themoviedb.org/3/movie/${endpoint}`, {
+                headers: { Authorization: `Bearer ${API_KEY}` },
+            });
+
+            setMovies(res.data.results);
+        } catch (err) {
+            console.log(err.response?.data?.status_message || "Failed to fetch movies.");
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (movieName) {
-            const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
+        fetchMovies("popular", setPopular, setPopularLoading);
+        fetchMovies("top_rated", setTopRated, setTopRatedLoading);
+        fetchMovies("upcoming", setUpcoming, setUpcomingLoading);
+    }, []);
 
-            const searchMovie = async () => {
-                if (!movieName) return;
-
-                setLoading(true);
-                setError(null);
-
-                try {
-                    const response = await axios.get("https://www.omdbapi.com/", {
-                        params: {
-                            apikey: API_KEY,
-                            s: movieName,
-                            page: currentPage,
-                        },
-                    });
-
-                    if (response.data.Response === "True") {
-                        setMovieList(response.data.Search);
-                        setTotalPages(Math.ceil(parseInt(response.data.totalResults, 10) / 10));
-                    } else {
-                        setError(response.data.Error);
-                        setMovieList([]);
-                    }
-                } catch (err) {
-                    setError(`Failed to fetch movies. ${err}`);
-                    setMovieList([]);
-                } finally {
-                    setLoading(false);
-                }
-            };
-            searchMovie();
+    useEffect(() => {
+        if (activeTab !== "home") {
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
-    }, [currentPage, movieName]);
+    }, [activeTab]);
 
     return (
-        <>
-            <header>
-                <div className="header-container">
-                    <button className={favoriteTab ? "" : "active"} onClick={() => setFavoriteTab(false)}>
-                        Home
-                    </button>
-                    <h1>Film Vault</h1>
-                    <button className={favoriteTab ? "active" : ""} onClick={() => setFavoriteTab(true)}>
-                        Favorites
-                    </button>
-                </div>
-            </header>
+        <div className="bg-primary-bg min-h-dvh text-primary-text min-w-75 pb-16">
+            <Header setActiveTab={setActiveTab} />
 
-            <main>
-                {favoriteTab ? (
-                    favorites.length > 0 ? (
-                        <MovieList movieList={favorites}></MovieList>
-                    ) : (
-                        <div className="empty-favorites-container">
-                            <p>No favorites yet</p>
-                        </div>
-                    )
+            <main className="max-w-300 mx-auto px-8 pt-36">
+                {activeTab === "home" ? (
+                    <section className="flex flex-col gap-16">
+                        <Carousel
+                            movies={popular}
+                            setActiveTab={setActiveTab}
+                            tabName={"popular"}
+                            loading={popularLoading}
+                        />
+
+                        <Carousel
+                            movies={topRated}
+                            setActiveTab={setActiveTab}
+                            tabName={"top_rated"}
+                            loading={topRatedLoading}
+                        />
+
+                        <Carousel
+                            movies={upcoming}
+                            setActiveTab={setActiveTab}
+                            tabName={"upcoming"}
+                            loading={upcomingLoading}
+                        />
+                    </section>
+                ) : activeTab === "list" ? (
+                    <div></div>
                 ) : (
-                    <>
-                        <div className="search-container">
-                            <div className="search-wrapper">
-                                <input
-                                    type="text"
-                                    id="searchInput"
-                                    value={searchInput}
-                                    autoComplete="off"
-                                    ref={inputRef}
-                                    placeholder="Search a movie"
-                                    onChange={(e) => setSearchInput(e.target.value)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                            setCurrentPage(1);
-                                            setMovieName(searchInput);
-                                        }
-                                    }}
-                                />
-                                {searchInput && (
-                                    <button onClick={clearAndFocus}>
-                                        <i className="fa-solid fa-xmark"></i>
-                                    </button>
-                                )}
-                                <button
-                                    id="search-btn"
-                                    onClick={() => {
-                                        setCurrentPage(1);
-                                        setMovieName(searchInput);
-                                    }}
-                                >
-                                    <i className="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        {loading && (
-                            <div className="loading-container">
-                                <div className="loading-wrapper">
-                                    <i className="fa-solid fa-circle-notch fa-spin"></i>
-                                </div>
-                            </div>
-                        )}
-
-                        {error && (
-                            <div className="error-container">
-                                <div className="error-wrapper">
-                                    <button onClick={() => setError(null)}>
-                                        <i className="fa-solid fa-xmark"></i>
-                                    </button>
-                                    <p>{error}</p>
-                                </div>
-                            </div>
-                        )}
-
-                        {movieList.length > 0 && (
-                            <>
-                                <MovieList movieList={movieList}></MovieList>
-
-                                <div className="page-buttons-container">
-                                    <button onClick={previousPage}>
-                                        <i className="fa-solid fa-chevron-left"></i>
-                                    </button>
-                                    <p>
-                                        {currentPage}
-                                        <span>┃</span>
-                                        {totalPages}
-                                    </p>
-                                    <button onClick={nextPage}>
-                                        <i className="fa-solid fa-chevron-right"></i>
-                                    </button>
-                                </div>
-                            </>
-                        )}
-                    </>
+                    <MoviesGrid activeTab={activeTab} />
                 )}
             </main>
-
-            <footer>
-                {<p>&copy; {new Date().getFullYear()} Vinicius de Moura Avemaria</p>}
-                <div className="socials-container">
-                    <a href="https://github.com/ViniAvemaria" target="_blank" rel="noopener noreferrer">
-                        <i className="fa-brands fa-github"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/viniavemaria/" target="_blank" rel="noopener noreferrer">
-                        <i className="fa-brands fa-linkedin"></i>
-                    </a>
-                </div>
-            </footer>
-        </>
+        </div>
     );
 }
 
