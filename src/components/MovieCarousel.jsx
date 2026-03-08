@@ -1,8 +1,14 @@
 import { useState, useRef } from "react";
-import SmallCard from "./SmallCard";
+import SmallMovieCard from "./SmallMovieCard";
 import CarouselSkeleton from "./skeletons/CarouselSkeleton";
+import { useMovies } from "../contexts/MoviesContext";
 
-const Carousel = ({ movies, setActiveTab, tabName, loading }) => {
+const MovieCarousel = ({ rowName }) => {
+    const { popular, topRated, upcoming, popularLoading, topRatedLoading, upcomingLoading, setActiveTab } = useMovies();
+    const movies = rowName === "popular" ? popular : rowName === "top_rated" ? topRated : upcoming;
+    const loading =
+        rowName === "popular" ? popularLoading : rowName === "top_rated" ? topRatedLoading : upcomingLoading;
+        
     const rowRef = useRef(null);
     const [canLeft, setCanLeft] = useState(false);
     const [canRight, setCanRight] = useState(true);
@@ -37,15 +43,15 @@ const Carousel = ({ movies, setActiveTab, tabName, loading }) => {
     ) : (
         <div>
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">{titles[tabName] || ""}</h2>
-                <button onClick={() => setActiveTab(tabName)} className="view-all-button">
+                <h2 className="text-2xl font-bold">{titles[rowName] || ""}</h2>
+                <button onClick={() => setActiveTab(rowName)} className="view-all-button">
                     View All
                 </button>
             </div>
             <div className="flex flex-col relative">
                 <div ref={rowRef} onScroll={checkScroll} className="flex gap-5 overflow-x-hidden">
                     {movies.map((movie) => (
-                        <SmallCard key={movie.id} movie={movie} />
+                        <SmallMovieCard key={movie.id} movie={movie} />
                     ))}
                 </div>
 
@@ -69,4 +75,4 @@ const Carousel = ({ movies, setActiveTab, tabName, loading }) => {
     );
 };
 
-export default Carousel;
+export default MovieCarousel;

@@ -1,59 +1,17 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import Card from "./Card";
-import MoviesGridSkeleton from "./skeletons/MoviesGridSkeleton";
+import { useEffect } from "react";
+import MovieCard from "./MovieCard";
+import CardGridSkeleton from "./skeletons/CardGridSkeleton";
+import { useMovies } from "../contexts/MoviesContext";
 
-const AllMovies = ({ activeTab, search }) => {
-    const API_KEY = import.meta.env.VITE_TMDB_KEY;
-
-    const [movies, setMovies] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
+const MovieCardGrid = () => {
+    const { movies, loading, setLoading, fetchMovies, search, searchMovies, page, setPage, activeTab, totalPages } =
+        useMovies();
 
     const titles = {
         popular: "Popular Movies",
         top_rated: "Top Rated Movies",
         upcoming: "Upcoming Movies",
-        search: "Search Result",
-    };
-
-    const fetchMovies = async () => {
-        try {
-            const res = await axios.get(`https://api.themoviedb.org/3/movie/${activeTab}`, {
-                headers: { Authorization: `Bearer ${API_KEY}` },
-                params: {
-                    page: page,
-                },
-            });
-
-            setTotalPages(res.data.total_pages);
-            setMovies(res.data.results);
-        } catch (err) {
-            console.log(err.response?.data?.status_message || "Failed to fetch movies.");
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const searchMovies = async () => {
-        try {
-            const res = await axios.get("https://api.themoviedb.org/3/search/movie", {
-                headers: { Authorization: `Bearer ${API_KEY}` },
-                params: {
-                    page,
-                    query: search,
-                },
-            });
-
-            setTotalPages(res.data.total_pages);
-            setMovies(res.data.results);
-        } catch (err) {
-            console.log(err.response?.data?.status_message || "Failed to fetch movies.");
-        } finally {
-            setLoading(false);
-        }
+        search: "Search Results",
     };
 
     useEffect(() => {
@@ -79,14 +37,14 @@ const AllMovies = ({ activeTab, search }) => {
     return (
         <section className="flex flex-col gap-8">
             {loading ? (
-                <MoviesGridSkeleton />
+                <CardGridSkeleton />
             ) : (
                 <>
                     <h2 className="text-2xl font-bold">{titles[activeTab] || ""}</h2>
 
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] place-items-center gap-8">
                         {movies.map((movie) => (
-                            <Card key={movie.id} movie={movie} />
+                            <MovieCard key={movie.id} movie={movie} />
                         ))}
                     </div>
 
@@ -115,4 +73,4 @@ const AllMovies = ({ activeTab, search }) => {
     );
 };
 
-export default AllMovies;
+export default MovieCardGrid;

@@ -1,4 +1,4 @@
-const MoviesGridSkeleton = () => {
+const CardGridSkeleton = () => {
     return (
         <div className="flex flex-col gap-8">
             <div className="relative bg-secundary-bg rounded-lg h-10 w-50 overflow-hidden">
@@ -29,4 +29,4 @@ const MoviesGridSkeleton = () => {
     );
 };
 
-export default MoviesGridSkeleton;
+export default CardGridSkeleton;

@@ -1,9 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
 const MovieContext = createContext(null);
 
-export const MovieProvider = ({ children }) => {
+export const MoviesProvider = ({ children }) => {
     const API_KEY = import.meta.env.VITE_TMDB_KEY;
 
     const [popular, setPopular] = useState([]);
@@ -15,8 +15,14 @@ export const MovieProvider = ({ children }) => {
     const [upcoming, setUpcoming] = useState([]);
     const [upcomingLoading, setUpcomingLoading] = useState(true);
 
-    const [movie, setMovie] = useState(null);
+    const [movies, setMovies] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const [movieDetails, setMovieDetails] = useState(null);
     const [movieLoading, setMovieLoading] = useState(true);
+
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
 
     const [activeTab, setActiveTab] = useState("home");
     const [search, setSearch] = useState("");
@@ -54,33 +60,82 @@ export const MovieProvider = ({ children }) => {
         }
     };
 
+    const fetchMovies = async () => {
+        if (activeTab === "search") return;
+
+        setLoading(true);
+        try {
+            const res = await axios.get(`https://api.themoviedb.org/3/movie/${activeTab}`, {
+                headers: { Authorization: `Bearer ${API_KEY}` },
+                params: { page },
+            });
+
+            setTotalPages(res.data.total_pages);
+            setMovies(res.data.results);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const searchMovies = async () => {
+        setLoading(true);
+        try {
+            const res = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
+                headers: { Authorization: `Bearer ${API_KEY}` },
+                params: { page, query: search },
+            });
+
+            setTotalPages(res.data.total_pages);
+            setMovies(res.data.results);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const fetchMovieDetails = async (id) => {
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}`, {
                 headers: { Authorization: `Bearer ${API_KEY}` },
             });
-            setMovie(res.data);
+            setMovieDetails(res.data);
         } finally {
             setMovieLoading(false);
         }
     };
 
+    useEffect(() => {
+        if (activeTab !== "home") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        setPage(1);
+        setSearch("");
+    }, [activeTab]);
+
     const value = {
         popular,
         topRated,
         upcoming,
-        movie,
+        movies,
+        movieDetails,
         popularLoading,
         topRatedLoading,
         upcomingLoading,
+        loading,
         movieLoading,
+        page,
+        totalPages,
         activeTab,
         search,
         setActiveTab,
         setSearch,
+        setPage,
+        setLoading,
+        setMovieDetails,
         fetchPopular,
         fetchTopRated,
         fetchUpcoming,
+        fetchMovies,
+        searchMovies,
         fetchMovieDetails,
     };
 
