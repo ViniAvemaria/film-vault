@@ -132,7 +132,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
                             </div>
 
                             <div className="flex gap-4 mt-auto ml-auto max-sm:justify-between max-sm:ml-0 max-[876px]:mt-4">
-                                <button className="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full">
+                                <button className="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full max-sm:py-2">
                                     <i className="fa-solid fa-bookmark mr-1"></i>
                                     Add
                                 </button>
@@ -141,7 +141,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
                                         setSeriesDetails(null);
                                         setOpenDetails(false);
                                     }}
-                                    className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full"
+                                    className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full max-sm:py-2"
                                 >
                                     Close
                                 </button>

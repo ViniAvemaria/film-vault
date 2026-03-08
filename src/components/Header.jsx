@@ -15,8 +15,8 @@ const Header = () => {
 
     return (
         <header className="flex items-center w-full z-10 bg-secundary-bg/90 backdrop-blur-lg h-20 fixed border-b border-border">
-            <div className="flex justify-between max-w-300 w-full mx-auto px-8">
-                <h1 className="text-accent text-3xl font-bold">Film Vault</h1>
+            <div className="flex justify-between gap-8 max-w-300 w-full mx-auto px-8">
+                <h1 className="text-accent text-3xl font-bold whitespace-nowrap">Film Vault</h1>
 
                 <div className="group flex items-center w-full max-w-lg border border-border bg-input-bg px-4 py-2 rounded-3xl gap-3 dark:border-border-dark focus-within:border-accent transition-colors duration-300 ease">
                     <input
@@ -63,8 +63,12 @@ const Header = () => {
                         onChange={(e) => setActiveSection(e.target.value)}
                         value={activeSection}
                     >
-                        <option value="movies">Movies</option>
-                        <option value="series">Series</option>
+                        <option className="bg-secundary-bg" value="movies">
+                            Movies
+                        </option>
+                        <option className="bg-secundary-bg" value="series">
+                            Series
+                        </option>
                     </select>
 
                     <button onClick={() => setActiveTab("home")} className="header-icon">
