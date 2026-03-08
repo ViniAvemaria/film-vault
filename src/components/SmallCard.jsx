@@ -13,13 +13,13 @@ const SmallCard = ({ movie }) => {
             >
                 <div className="relative overflow-hidden aspect-2/3">
                     {!posterLoaded && (
-                        <div className="absolute inset-0 bg-secundary-bg rounded-lg overflow-hidden">
+                        <div className="absolute inset-0 bg-secundary-bg overflow-hidden">
                             <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-shimmer to-transparent" />
                         </div>
                     )}
 
                     <img
-                        className={`object-contain w-full transitio duration-300 group-hover:scale-105 ${posterLoaded ? "opacity-100" : "opacity-0"}`}
+                        className="object-contain w-full transitio duration-300 group-hover:scale-105"
                         src={`${movie.poster_path ? `https://image.tmdb.org/t/p/w1280${movie.poster_path}` : "/film-vault/image_unavailable.png"}`}
                         alt="Film's poster"
                         onLoad={() => setPosterLoaded(true)}

@@ -17,6 +17,7 @@ function App() {
     const [upcomingLoading, setUpcomingLoading] = useState(true);
 
     const [activeTab, setActiveTab] = useState("home");
+    const [search, setSearch] = useState("");
 
     const fetchMovies = async (endpoint, setMovies, setLoading) => {
         try {
@@ -46,7 +47,7 @@ function App() {
 
     return (
         <div className="bg-primary-bg min-h-dvh text-primary-text min-w-75 pb-16">
-            <Header setActiveTab={setActiveTab} />
+            <Header setActiveTab={setActiveTab} setSearch={setSearch} />
 
             <main className="max-w-300 mx-auto px-8 pt-36">
                 {activeTab === "home" ? (
@@ -75,7 +76,7 @@ function App() {
                 ) : activeTab === "list" ? (
                     <div></div>
                 ) : (
-                    <MoviesGrid activeTab={activeTab} />
+                    <MoviesGrid activeTab={activeTab} search={search} />
                 )}
             </main>
         </div>

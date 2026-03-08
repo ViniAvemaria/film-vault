@@ -3,7 +3,7 @@ import axios from "axios";
 import Card from "./Card";
 import MoviesGridSkeleton from "./skeletons/MoviesGridSkeleton";
 
-const AllMovies = ({ activeTab }) => {
+const AllMovies = ({ activeTab, search }) => {
     const API_KEY = import.meta.env.VITE_TMDB_KEY;
 
     const [movies, setMovies] = useState([]);
@@ -16,6 +16,7 @@ const AllMovies = ({ activeTab }) => {
         popular: "Popular Movies",
         top_rated: "Top Rated Movies",
         upcoming: "Upcoming Movies",
+        search: "Search Result",
     };
 
     const fetchMovies = async () => {
@@ -36,9 +37,32 @@ const AllMovies = ({ activeTab }) => {
         }
     };
 
+    const searchMovies = async () => {
+        try {
+            const res = await axios.get("https://api.themoviedb.org/3/search/movie", {
+                headers: { Authorization: `Bearer ${API_KEY}` },
+                params: {
+                    page,
+                    query: search,
+                },
+            });
+
+            setTotalPages(res.data.total_pages);
+            setMovies(res.data.results);
+        } catch (err) {
+            console.log(err.response?.data?.status_message || "Failed to fetch movies.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        fetchMovies();
-    }, [page]);
+        if (search) {
+            searchMovies();
+        } else {
+            fetchMovies();
+        }
+    }, [page, search]);
 
     const handleNextPage = async () => {
         setLoading(true);

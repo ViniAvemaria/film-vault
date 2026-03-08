@@ -43,7 +43,10 @@ const Details = ({ id, setOpenDetails }) => {
     useEffect(() => {
         if (!movie) return;
 
-        if (!movie.backdrop_path) setBg("not_found");
+        if (!movie.backdrop_path) {
+            setBg("not_found");
+            return;
+        }
 
         const img = new Image();
         const url = `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`;
