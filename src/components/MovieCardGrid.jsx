@@ -40,7 +40,7 @@ const MovieCardGrid = () => {
                 <CardGridSkeleton />
             ) : (
                 <>
-                    <h2 className="text-2xl font-bold">{titles[activeTab] || ""}</h2>
+                    <h2 className="text-2xl font-bold">{titles[activeTab]}</h2>
 
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] place-items-center gap-8">
                         {movies.map((movie) => (

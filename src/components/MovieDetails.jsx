@@ -2,11 +2,16 @@ import { createPortal } from "react-dom";
 import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import { useMovies } from "../contexts/MoviesContext";
+import { useSeries } from "../contexts/SeriesContext";
+import { useList } from "../contexts/ListContext";
 
 const MovieDetails = ({ id, setOpenDetails }) => {
-    const { fetchMovieDetails, movieDetails, setMovieDetails, movieLoading } = useMovies();
+    const { fetchMovieDetails, movieDetails, setMovieDetails, movieLoading, activeTab: moviesTab } = useMovies();
+    const { activeTab: seriesTab } = useSeries();
     const [posterLoaded, setPosterLoaded] = useState(false);
     const [bg, setBg] = useState(null);
+    const { addItem, removeItem, isInList } = useList();
+    const activeTab = moviesTab === "list" || seriesTab === "list" ? "list" : "";
 
     const formatDate = (date) => {
         const [year, month, day] = date.split("-");
@@ -39,6 +44,12 @@ const MovieDetails = ({ id, setOpenDetails }) => {
         };
         load();
     }, [movieDetails]);
+
+    useEffect(() => {
+        return () => {
+            setMovieDetails(null);
+        };
+    }, []);
 
     return createPortal(
         <div className="fixed inset-0 z-20 p-6 max-sm:p-4 flex bg-black/35 backdrop-blur text-primary-text max-[876px]:overflow-scroll">
@@ -132,15 +143,31 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                             </div>
 
                             <div className="flex gap-4 mt-auto ml-auto max-sm:justify-between max-sm:ml-0 max-[876px]:mt-4">
-                                <button className="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full">
-                                    <i className="fa-solid fa-bookmark mr-1"></i>
-                                    Add
-                                </button>
                                 <button
                                     onClick={() => {
-                                        setMovieDetails(null);
-                                        setOpenDetails(false);
+                                        if (isInList(id, "movies") && activeTab === "list") {
+                                            removeItem(id, "movies");
+                                        } else {
+                                            addItem(id);
+                                        }
                                     }}
+                                    className="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full"
+                                >
+                                    {isInList(id, "movies") && activeTab === "list" ? (
+                                        <>
+                                            <i className="fa-solid fa-x text-sm mr-2"></i>
+                                            Remove
+                                        </>
+                                    ) : (
+                                        <>
+                                            {" "}
+                                            <i className="fa-regular fa-bookmark mr-2"></i>
+                                            Add
+                                        </>
+                                    )}
+                                </button>
+                                <button
+                                    onClick={() => setOpenDetails(false)}
                                     className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full"
                                 >
                                     Close

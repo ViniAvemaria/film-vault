@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import MovieCarousel from "./MovieCarousel";
 import MovieCardGrid from "./MovieCardGrid";
 import { useMovies } from "../contexts/MoviesContext";
+import List from "./List";
 
 const MoviesSection = () => {
     const { activeTab, fetchPopular, fetchTopRated, fetchUpcoming } = useMovies();
@@ -23,7 +24,7 @@ const MoviesSection = () => {
                     <MovieCarousel rowName={"upcoming"} />
                 </section>
             ) : activeTab === "list" ? (
-                <div>List</div>
+                <List />
             ) : (
                 <MovieCardGrid />
             )}

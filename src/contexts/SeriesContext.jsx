@@ -96,6 +96,7 @@ export const SeriesProvider = ({ children }) => {
                 headers: { Authorization: `Bearer ${API_KEY}` },
             });
             setSeriesDetails(res.data);
+            return res.data;
         } finally {
             setSeriesLoading(false);
         }

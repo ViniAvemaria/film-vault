@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import SeriesCarousel from "./SeriesCarousel";
 import SeriesCardGrid from "./SeriesCardGrid";
 import { useSeries } from "../contexts/SeriesContext";
+import List from "./List";
 
 const SeriesSection = () => {
     const { activeTab, fetchPopular, fetchTopRated, fetchOnAir } = useSeries();
@@ -23,7 +24,7 @@ const SeriesSection = () => {
                     <SeriesCarousel rowName={"on_air"} />
                 </section>
             ) : activeTab === "list" ? (
-                <div>List</div>
+                <List />
             ) : (
                 <SeriesCardGrid />
             )}

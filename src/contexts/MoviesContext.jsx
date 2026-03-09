@@ -98,6 +98,7 @@ export const MoviesProvider = ({ children }) => {
                 headers: { Authorization: `Bearer ${API_KEY}` },
             });
             setMovieDetails(res.data);
+            return res.data;
         } finally {
             setMovieLoading(false);
         }
