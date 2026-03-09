@@ -21,7 +21,7 @@ const SeriesSection = () => {
 
                     <SeriesCarousel rowName={"top_rated"} />
 
-                    <SeriesCarousel rowName={"on_air"} />
+                    <SeriesCarousel rowName={"on_the_air"} />
                 </section>
             ) : activeTab === "list" ? (
                 <List />

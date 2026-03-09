@@ -160,7 +160,6 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
                                         </>
                                     ) : (
                                         <>
-                                            {" "}
                                             <i className="fa-regular fa-bookmark mr-2"></i>
                                             Add
                                         </>

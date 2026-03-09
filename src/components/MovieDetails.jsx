@@ -52,7 +52,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
     }, []);
 
     return createPortal(
-        <div className="fixed inset-0 z-20 p-6 max-sm:p-4 flex bg-black/35 backdrop-blur text-primary-text max-[876px]:overflow-scroll">
+        <div className="fixed inset-0 z-20 px-6 py-8 max-sm:px-4 flex bg-black/35 backdrop-blur text-primary-text max-[876px]:overflow-scroll">
             {movieLoading || bg === null || movieDetails === null ? (
                 <Loading />
             ) : (
@@ -142,7 +142,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                 </div>
                             </div>
 
-                            <div className="flex gap-4 mt-auto ml-auto max-sm:justify-between max-sm:ml-0 max-[876px]:mt-4">
+                            <div className="flex gap-4 w-80 mt-auto ml-auto max-sm:w-full max-sm:justify-between max-sm:ml-0 max-[876px]:mt-4">
                                 <button
                                     onClick={() => {
                                         if (isInList(id, "movies") && activeTab === "list") {
@@ -151,7 +151,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                             addItem(id);
                                         }
                                     }}
-                                    className="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full"
+                                    className="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover cursor-pointer transition-colors duration-300 ease text-card-bg w-full"
                                 >
                                     {isInList(id, "movies") && activeTab === "list" ? (
                                         <>
@@ -160,7 +160,6 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                         </>
                                     ) : (
                                         <>
-                                            {" "}
                                             <i className="fa-regular fa-bookmark mr-2"></i>
                                             Add
                                         </>
@@ -168,7 +167,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                 </button>
                                 <button
                                     onClick={() => setOpenDetails(false)}
-                                    className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full"
+                                    className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 cursor-pointer transition-colors duration-300 ease text-card-bg w-full"
                                 >
                                     Close
                                 </button>

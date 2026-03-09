@@ -14,7 +14,7 @@ const SeriesCarousel = ({ rowName }) => {
     const titles = {
         popular: "Popular Series",
         top_rated: "Top Rated Series",
-        on_air: "On Air Series",
+        on_the_air: "On The Air Series",
     };
 
     const checkScroll = () => {
