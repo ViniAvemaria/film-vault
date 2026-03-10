@@ -31,7 +31,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
     useEffect(() => {
         if (!seriesDetails) return;
 
-        const load = async () => {
+        const loadBackdrop = async () => {
             if (!seriesDetails.backdrop_path) {
                 setBg("not_found");
                 return;
@@ -42,12 +42,13 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
             img.src = url;
             img.onload = () => setBg(url);
         };
-        load();
+        loadBackdrop();
     }, [seriesDetails]);
 
     useEffect(() => {
         return () => {
             setSeriesDetails(null);
+            setBg(null);
         };
     }, []);
 
@@ -106,7 +107,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
 
                             <div className="flex flex-wrap gap-2.5">
                                 {seriesDetails.genres.map((genre) => (
-                                    <span key={genre.id} className="bg-accent px-1.75 py-px rounded-xl text-card-bg">
+                                    <span key={genre.id} className="bg-accent px-2.5 py-0.5 rounded-xl text-card-bg">
                                         {genre.name}
                                     </span>
                                 ))}

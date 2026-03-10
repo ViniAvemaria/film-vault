@@ -25,7 +25,7 @@ const SerieCard = ({ series }) => {
                         onLoad={() => setPosterLoaded(true)}
                     />
                     <span className="absolute top-0 right-0 flex items-center bg-secundary-bg py-0.75 px-2 rounded-lg m-0.5">
-                        <i className="fa-solid fa-star text-accent mr-1"></i>
+                        <i className="fa-solid fa-star text-accent mr-1 text-sm"></i>
                         {series.vote_average.toFixed(1)}
                     </span>
                 </div>

@@ -31,7 +31,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
     useEffect(() => {
         if (!movieDetails) return;
 
-        const load = async () => {
+        const loadBackdrop = async () => {
             if (!movieDetails.backdrop_path) {
                 setBg("not_found");
                 return;
@@ -42,12 +42,13 @@ const MovieDetails = ({ id, setOpenDetails }) => {
             img.src = url;
             img.onload = () => setBg(url);
         };
-        load();
+        loadBackdrop();
     }, [movieDetails]);
 
     useEffect(() => {
         return () => {
             setMovieDetails(null);
+            setBg(null);
         };
     }, []);
 
@@ -106,7 +107,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
 
                             <div className="flex flex-wrap gap-2.5">
                                 {movieDetails.genres.map((genre) => (
-                                    <span key={genre.id} className="bg-accent px-1.75 py-px rounded-xl text-card-bg">
+                                    <span key={genre.id} className="bg-accent px-2.5 py-0.5 rounded-xl text-card-bg">
                                         {genre.name}
                                     </span>
                                 ))}

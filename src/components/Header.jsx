@@ -24,6 +24,14 @@ const Header = () => {
         }
     }, [openSearch]);
 
+    useEffect(() => {
+        if (openMenu) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }, [openMenu]);
+
     return (
         <>
             {openMenu && (
@@ -103,7 +111,7 @@ const Header = () => {
                             <i className="fa-solid fa-house"></i>
                         </button>
 
-                        <button onClick={() => setActiveTab("list")} className="header-icon">
+                        <button onClick={() => setActiveTab("list")} className="header-icon pt-2.5">
                             <i className="fa-solid fa-list text-lg"></i>
                         </button>
                     </nav>
@@ -124,15 +132,15 @@ const Header = () => {
             </header>
 
             <nav
-                className={`flex fixed z-20 top-0 right-0 w-64 sm:w-72 h-dvh bg-secundary-bg transition-transform-opacity duration-300 ease border-l border-border ${openMenu ? "opacity-100 pointer-events-auto translate-x-0" : "opacity-0 pointer-events-none translate-x-full"}`}
+                className={`flex fixed z-20 top-0 right-0 w-64 sm:w-72 h-dvh bg-secundary-bg transition-transform-opacity duration-300 ease ${openMenu ? "opacity-100 pointer-events-auto translate-x-0" : "opacity-0 pointer-events-none translate-x-full"}`}
             >
                 <ul className="flex flex-col w-full">
                     <li className="border-b border-border">
                         <button
                             onClick={() => setOpenMenu(false)}
-                            className="text-start w-full px-5 py-6 cursor-pointer hover:text-accent transition-colors duration-300 ease"
+                            className="flex items-center w-full px-5 py-6 cursor-pointer hover:text-accent transition-colors duration-300 ease"
                         >
-                            <i className="fa-solid fa-x mr-3"></i>
+                            <i className="fa-solid fa-x mr-3 text-sm w-4"></i>
                             Close
                         </button>
                     </li>
@@ -143,9 +151,9 @@ const Header = () => {
                                 setActiveTab("home");
                                 setOpenMenu(false);
                             }}
-                            className="text-start w-full px-5 py-6 cursor-pointer hover:text-accent transition-colors duration-300 ease"
+                            className="flex items-center w-full px-5 py-6 cursor-pointer hover:text-accent transition-colors duration-300 ease"
                         >
-                            <i className="fa-solid fa-house mr-3 text-sm"></i>
+                            <i className="fa-solid fa-house mr-3 text-sm w-4"></i>
                             Home
                         </button>
                     </li>
@@ -156,9 +164,9 @@ const Header = () => {
                                 setActiveTab("list");
                                 setOpenMenu(false);
                             }}
-                            className="text-start w-full px-5 py-6 cursor-pointer hover:text-accent transition-colors duration-300 ease"
+                            className="flex items-center w-full px-5 py-6 cursor-pointer hover:text-accent transition-colors duration-300 ease"
                         >
-                            <i className="fa-solid fa-list mr-3"></i>
+                            <i className="fa-solid fa-list mr-3 w-4"></i>
                             List
                         </button>
                     </li>
