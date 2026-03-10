@@ -43,19 +43,23 @@ const SeriesCarousel = ({ rowName }) => {
         <div>
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold">{titles[rowName] || ""}</h2>
-                <button onClick={() => setActiveTab(rowName)} className="view-all-button">
+                <button onClick={() => setActiveTab(rowName)} className="accent-button">
                     View All
                 </button>
             </div>
             <div className="flex flex-col relative">
-                <div ref={rowRef} onScroll={checkScroll} className="flex gap-5 overflow-x-hidden">
+                <div
+                    ref={rowRef}
+                    onScroll={checkScroll}
+                    className="flex gap-5 overflow-x-hidden max-sm:overflow-x-scroll"
+                >
                     {series.map((series) => (
                         <SmallSeriesCard key={series.id} series={series} />
                     ))}
                 </div>
 
                 {canLeft && (
-                    <div className="flex left-0 top-[40%] absolute px-1">
+                    <div className="flex left-0 top-[40%] absolute px-1 max-sm:hidden">
                         <button onClick={() => scroll("left")} className="arrow-button">
                             <i className="fa-solid fa-angle-left"></i>
                         </button>
@@ -63,7 +67,7 @@ const SeriesCarousel = ({ rowName }) => {
                 )}
 
                 {canRight && (
-                    <div className="flex right-0 top-[40%] absolute px-1">
+                    <div className="flex right-0 top-[40%] absolute px-1 max-sm:hidden">
                         <button onClick={() => scroll("right")} className="arrow-button">
                             <i className="fa-solid fa-angle-right"></i>
                         </button>

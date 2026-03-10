@@ -30,7 +30,7 @@ const SerieCard = ({ series }) => {
                     </span>
                 </div>
 
-                <div className="flex items-center min-h-10 ">
+                <div className="flex items-center min-h-10 min-w-56">
                     <h2 className="font-semibold text-accent line-clamp-2 leading-snug">{series.name}</h2>
                 </div>
                 <h3 className="text-sm text-secundary-text">{series.first_air_date.split("-")[0]}</h3>

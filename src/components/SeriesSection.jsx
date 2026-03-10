@@ -5,13 +5,20 @@ import { useSeries } from "../contexts/SeriesContext";
 import List from "./List";
 
 const SeriesSection = () => {
-    const { activeTab, fetchPopular, fetchTopRated, fetchOnAir } = useSeries();
+    const { activeTab, fetchPopular, fetchTopRated, fetchOnAir, setPage } = useSeries();
 
     useEffect(() => {
         fetchPopular();
         fetchTopRated();
         fetchOnAir();
     }, []);
+
+    useEffect(() => {
+        if (activeTab !== "home") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        setPage(1);
+    }, [activeTab]);
 
     return (
         <>

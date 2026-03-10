@@ -4,19 +4,8 @@ import CardGridSkeleton from "./skeletons/CardGridSkeleton";
 import { useSeries } from "../contexts/SeriesContext";
 
 const SeriesCardGrid = () => {
-    const {
-        series,
-        loading,
-        setLoading,
-        fetchSeries,
-        search,
-        searchSeries,
-        page,
-        setPage,
-        activeTab,
-        totalPages,
-        totalResults,
-    } = useSeries();
+    const { series, loading, fetchSeries, search, searchSeries, page, setPage, activeTab, totalPages, totalResults } =
+        useSeries();
 
     const titles = {
         popular: "Popular Series",
@@ -26,23 +15,23 @@ const SeriesCardGrid = () => {
     };
 
     useEffect(() => {
-        if (search) {
+        if (activeTab === "search") {
             searchSeries();
         } else {
             fetchSeries();
         }
-    }, [page, search]);
+    }, [page, search, activeTab]);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, [page]);
 
     const handleNextPage = async () => {
-        setLoading(true);
         setPage((prev) => prev + 1);
-        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     const handlePreviousPage = async () => {
-        setLoading(true);
         setPage((prev) => prev - 1);
-        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     return (
@@ -63,7 +52,7 @@ const SeriesCardGrid = () => {
                     </div>
 
                     <div>
-                        <div className="flex justify-center items-center gap-2 text-primary-text dark:text-primary-text-dark mt-12">
+                        <div className="flex justify-center items-center gap-2 text-primary-text mt-12">
                             <div>
                                 <button disabled={page === 1} onClick={handlePreviousPage} className="page-button">
                                     <i className="fa-solid fa-angle-left"></i>

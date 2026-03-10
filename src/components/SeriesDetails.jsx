@@ -99,7 +99,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
                                 </span>
 
                                 <span>
-                                    <i className="fa-solid fa-tv text-accent mr-2"></i>
+                                    <i className="fa-solid fa-tv text-sm text-accent mr-2"></i>
                                     {`${seriesDetails.number_of_seasons} seasons • ${seriesDetails.number_of_episodes} episodes`}
                                 </span>
                             </div>
@@ -153,7 +153,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
                                     }}
                                     className="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full"
                                 >
-                                    {isInList(id, "series") && activeTab === "list" ? (
+                                    {isInList(id, "series") ? (
                                         <>
                                             <i className="fa-solid fa-x text-sm mr-2"></i>
                                             Remove

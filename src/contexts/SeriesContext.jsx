@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
 import axios from "axios";
 
 const SeriesContext = createContext(null);
@@ -103,13 +103,6 @@ export const SeriesProvider = ({ children }) => {
             setSeriesLoading(false);
         }
     };
-
-    useEffect(() => {
-        if (activeTab !== "home") {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-        setPage(1);
-    }, [activeTab]);
 
     const value = {
         popular,

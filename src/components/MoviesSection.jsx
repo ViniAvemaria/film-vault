@@ -5,13 +5,20 @@ import { useMovies } from "../contexts/MoviesContext";
 import List from "./List";
 
 const MoviesSection = () => {
-    const { activeTab, fetchPopular, fetchTopRated, fetchUpcoming } = useMovies();
+    const { activeTab, fetchPopular, fetchTopRated, fetchUpcoming, setPage } = useMovies();
 
     useEffect(() => {
         fetchPopular();
         fetchTopRated();
         fetchUpcoming();
     }, []);
+
+    useEffect(() => {
+        if (activeTab !== "home") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        setPage(1);
+    }, [activeTab]);
 
     return (
         <>

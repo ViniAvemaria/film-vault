@@ -34,11 +34,12 @@ const List = () => {
             ) : (
                 <>
                     <div className="flex justify-between">
-                        <h2 className="text-2xl font-bold">Favourites List</h2>
+                        <h2 className="text-2xl font-bold">Favorites List</h2>
                         <button
-                            className="view-all-button"
+                            disabled={movies.length === 0 && series.length === 0}
+                            className="accent-button"
                             onClick={() => {
-                                if (window.confirm("Clear your favourites list?")) {
+                                if (window.confirm("Clear your favorites list?")) {
                                     clearList();
                                 }
                             }}
@@ -47,15 +48,24 @@ const List = () => {
                         </button>
                     </div>
 
-                    <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] place-items-center gap-8">
-                        {movies.map((movie) => (
-                            <MovieCard key={movie.id} movie={movie} />
-                        ))}
+                    {movies.length === 0 && series.length === 0 ? (
+                        <div className="mt-20">
+                            <h2 className="text-center font-semibold text-xl mb-2">No favorites yet!</h2>
+                            <h3 className="text-center text-secundary-text">
+                                Click the Add button on any movie or series page to add it to your list.
+                            </h3>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] place-items-center gap-8">
+                            {movies.map((movie) => (
+                                <MovieCard key={movie.id} movie={movie} />
+                            ))}
 
-                        {series.map((series) => (
-                            <SeriesCard key={series.id} series={series} />
-                        ))}
-                    </div>
+                            {series.map((series) => (
+                                <SeriesCard key={series.id} series={series} />
+                            ))}
+                        </div>
+                    )}
                 </>
             )}
         </section>

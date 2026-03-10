@@ -157,7 +157,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                     }}
                                     className="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover cursor-pointer transition-colors duration-300 ease text-card-bg w-full"
                                 >
-                                    {isInList(id, "movies") && activeTab === "list" ? (
+                                    {isInList(id, "movies") ? (
                                         <>
                                             <i className="fa-solid fa-x text-sm mr-2"></i>
                                             Remove

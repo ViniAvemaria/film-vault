@@ -4,19 +4,8 @@ import CardGridSkeleton from "./skeletons/CardGridSkeleton";
 import { useMovies } from "../contexts/MoviesContext";
 
 const MovieCardGrid = () => {
-    const {
-        movies,
-        loading,
-        setLoading,
-        fetchMovies,
-        search,
-        searchMovies,
-        page,
-        setPage,
-        activeTab,
-        totalPages,
-        totalResults,
-    } = useMovies();
+    const { movies, loading, fetchMovies, search, searchMovies, page, setPage, activeTab, totalPages, totalResults } =
+        useMovies();
 
     const titles = {
         popular: "Popular Movies",
@@ -26,23 +15,23 @@ const MovieCardGrid = () => {
     };
 
     useEffect(() => {
-        if (search) {
+        if (activeTab === "search") {
             searchMovies();
         } else {
             fetchMovies();
         }
-    }, [page, search]);
+    }, [page, search, activeTab]);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, [page]);
 
     const handleNextPage = async () => {
-        setLoading(true);
         setPage((prev) => prev + 1);
-        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     const handlePreviousPage = async () => {
-        setLoading(true);
         setPage((prev) => prev - 1);
-        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     return (
@@ -63,7 +52,7 @@ const MovieCardGrid = () => {
                     </div>
 
                     <div>
-                        <div className="flex justify-center items-center gap-2 text-primary-text dark:text-primary-text-dark mt-12">
+                        <div className="flex justify-center items-center gap-2 text-primary-text mt-12">
                             <div>
                                 <button disabled={page === 1} onClick={handlePreviousPage} className="page-button">
                                     <i className="fa-solid fa-angle-left"></i>

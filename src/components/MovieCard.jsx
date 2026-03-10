@@ -30,7 +30,7 @@ const MovieCard = ({ movie }) => {
                     </span>
                 </div>
 
-                <div className="flex items-center min-h-10 ">
+                <div className="flex items-center min-h-10 min-w-56">
                     <h2 className="font-semibold text-accent line-clamp-2 leading-snug">{movie.title}</h2>
                 </div>
                 <h3 className="text-sm text-secundary-text">{movie.release_date.split("-")[0]}</h3>
