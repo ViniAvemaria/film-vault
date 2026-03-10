@@ -4,8 +4,19 @@ import CardGridSkeleton from "./skeletons/CardGridSkeleton";
 import { useSeries } from "../contexts/SeriesContext";
 
 const SeriesCardGrid = () => {
-    const { series, loading, setLoading, fetchSeries, search, searchSeries, page, setPage, activeTab, totalPages } =
-        useSeries();
+    const {
+        series,
+        loading,
+        setLoading,
+        fetchSeries,
+        search,
+        searchSeries,
+        page,
+        setPage,
+        activeTab,
+        totalPages,
+        totalResults,
+    } = useSeries();
 
     const titles = {
         popular: "Popular Series",
@@ -40,7 +51,10 @@ const SeriesCardGrid = () => {
                 <CardGridSkeleton />
             ) : (
                 <>
-                    <h2 className="text-2xl font-bold">{titles[activeTab] || ""}</h2>
+                    <h2 className="text-2xl font-bold">
+                        {titles[activeTab]}
+                        {activeTab === "search" && <span className="text-secundary-text">{` (${totalResults})`}</span>}
+                    </h2>
 
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] place-items-center gap-8">
                         {series.map((series) => (

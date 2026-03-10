@@ -5,11 +5,12 @@ import { useSection } from "../contexts/SectionContext";
 
 const Header = () => {
     const { activeSection, setActiveSection } = useSection();
-    const { setActiveTab: setMoviesTab, setSearch: setMovieSearch } = useMovies();
-    const { setActiveTab: setSeriesTab, setSearch: setSeriesSearch } = useSeries();
+    const { setActiveTab: setMoviesTab, setSearch: setMovieSearch, setPage: setMoviesPage } = useMovies();
+    const { setActiveTab: setSeriesTab, setSearch: setSeriesSearch, setPage: setSeriesPage } = useSeries();
 
     const setActiveTab = activeSection === "movies" ? setMoviesTab : setSeriesTab;
     const setSearch = activeSection === "movies" ? setMovieSearch : setSeriesSearch;
+    const setPage = activeSection === "movies" ? setMoviesPage : setSeriesPage;
 
     const [query, setQuery] = useState("");
 
@@ -26,6 +27,7 @@ const Header = () => {
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
+                                setPage(1);
                                 setSearch(query);
                                 setActiveTab("search");
                             }
@@ -47,9 +49,9 @@ const Header = () => {
                     <button
                         type="button"
                         onClick={() => {
+                            setPage(1);
                             setSearch(query);
                             setActiveTab("search");
-                            window.scrollTo({ top: 0, behavior: "smooth" });
                         }}
                         className="cursor-pointer px-1"
                     >

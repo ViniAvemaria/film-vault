@@ -4,8 +4,19 @@ import CardGridSkeleton from "./skeletons/CardGridSkeleton";
 import { useMovies } from "../contexts/MoviesContext";
 
 const MovieCardGrid = () => {
-    const { movies, loading, setLoading, fetchMovies, search, searchMovies, page, setPage, activeTab, totalPages } =
-        useMovies();
+    const {
+        movies,
+        loading,
+        setLoading,
+        fetchMovies,
+        search,
+        searchMovies,
+        page,
+        setPage,
+        activeTab,
+        totalPages,
+        totalResults,
+    } = useMovies();
 
     const titles = {
         popular: "Popular Movies",
@@ -40,7 +51,10 @@ const MovieCardGrid = () => {
                 <CardGridSkeleton />
             ) : (
                 <>
-                    <h2 className="text-2xl font-bold">{titles[activeTab]}</h2>
+                    <h2 className="text-2xl font-bold">
+                        {titles[activeTab]}
+                        {activeTab === "search" && <span className="text-secundary-text">{` (${totalResults})`}</span>}
+                    </h2>
 
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] place-items-center gap-8">
                         {movies.map((movie) => (

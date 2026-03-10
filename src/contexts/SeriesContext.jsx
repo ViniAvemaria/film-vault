@@ -23,6 +23,7 @@ export const SeriesProvider = ({ children }) => {
 
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+    const [totalResults, setTotalResults] = useState(0);
 
     const [activeTab, setActiveTab] = useState("home");
     const [search, setSearch] = useState("");
@@ -83,6 +84,7 @@ export const SeriesProvider = ({ children }) => {
                 headers: { Authorization: `Bearer ${API_KEY}` },
                 params: { page, query: search },
             });
+            setTotalResults(res.data.total_results);
             setTotalPages(res.data.total_pages);
             setSeries(res.data.results);
         } finally {
@@ -107,7 +109,6 @@ export const SeriesProvider = ({ children }) => {
             window.scrollTo({ top: 0, behavior: "smooth" });
         }
         setPage(1);
-        setSearch("");
     }, [activeTab]);
 
     const value = {
@@ -125,6 +126,7 @@ export const SeriesProvider = ({ children }) => {
         totalPages,
         activeTab,
         search,
+        totalResults,
         setActiveTab,
         setSearch,
         setPage,

@@ -136,7 +136,11 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                     <div>
                                         <p className="mb-1">Original Language</p>
                                         <p className="text-primary-text">
-                                            {getLanguageName(movieDetails.original_language)}
+                                            {getLanguageName(
+                                                movieDetails.original_language === "cn"
+                                                    ? "yue"
+                                                    : movieDetails.original_language,
+                                            )}
                                         </p>
                                     </div>
                                 </div>
