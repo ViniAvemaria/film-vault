@@ -54,23 +54,25 @@ const MovieCardGrid = () => {
                         ))}
                     </div>
 
-                    <div>
-                        <div className="flex justify-center items-center gap-2 text-primary-text mt-12">
-                            <div>
-                                <button disabled={page === 1} onClick={handlePreviousPage} className="page-button">
-                                    <i className="fa-solid fa-angle-left"></i>
-                                </button>
-                            </div>
+                    <div className="flex justify-center gap-4 text-primary-text mt-12">
+                        <div>
+                            <button disabled={page === 1} onClick={handlePreviousPage} className="page-button text-xl">
+                                <i className="fa-solid fa-angle-left"></i>
+                            </button>
+                        </div>
 
-                            <div className="flex px-2.5 py-1 border border-border rounded-lg">
-                                <p className="text-center w-2.5 font-semibold">{page}</p>
-                            </div>
+                        <div className="flex items-center px-3.5 py-1 border border-border rounded-lg text-xl">
+                            <p className="text-center font-semibold min-w-4">{page}</p>
+                        </div>
 
-                            <div>
-                                <button disabled={page === totalPages} onClick={handleNextPage} className="page-button">
-                                    <i className="fa-solid fa-angle-right"></i>
-                                </button>
-                            </div>
+                        <div>
+                            <button
+                                disabled={page === totalPages}
+                                onClick={handleNextPage}
+                                className="page-button text-xl"
+                            >
+                                <i className="fa-solid fa-angle-right"></i>
+                            </button>
                         </div>
                     </div>
                 </>
