@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const MovieContext = createContext(null);
 
@@ -28,10 +29,15 @@ export const MoviesProvider = ({ children }) => {
     const [activeTab, setActiveTab] = useState("home");
     const [search, setSearch] = useState("");
 
+    const { i18n } = useTranslation();
+
     const fetchPopular = async () => {
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/movie/popular`, {
                 headers: { Authorization: `Bearer ${API_KEY}` },
+                params: {
+                    language: i18n.language,
+                },
             });
             setPopular(res.data.results);
         } finally {
@@ -43,6 +49,9 @@ export const MoviesProvider = ({ children }) => {
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/movie/top_rated`, {
                 headers: { Authorization: `Bearer ${API_KEY}` },
+                params: {
+                    language: i18n.language,
+                },
             });
             setTopRated(res.data.results);
         } finally {
@@ -54,6 +63,9 @@ export const MoviesProvider = ({ children }) => {
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/movie/upcoming`, {
                 headers: { Authorization: `Bearer ${API_KEY}` },
+                params: {
+                    language: i18n.language,
+                },
             });
             setUpcoming(res.data.results);
         } finally {
@@ -68,7 +80,7 @@ export const MoviesProvider = ({ children }) => {
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/movie/${activeTab}`, {
                 headers: { Authorization: `Bearer ${API_KEY}` },
-                params: { page },
+                params: { page, language: i18n.language },
             });
 
             setTotalPages(res.data.total_pages);
@@ -83,7 +95,7 @@ export const MoviesProvider = ({ children }) => {
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/search/movie`, {
                 headers: { Authorization: `Bearer ${API_KEY}` },
-                params: { page, query: search },
+                params: { page, query: search, language: i18n.language },
             });
             setTotalResults(res.data.total_results);
             setTotalPages(res.data.total_pages);
@@ -97,6 +109,9 @@ export const MoviesProvider = ({ children }) => {
         try {
             const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}`, {
                 headers: { Authorization: `Bearer ${API_KEY}` },
+                params: {
+                    language: i18n.language,
+                },
             });
             setMovieDetails(res.data);
             return res.data;

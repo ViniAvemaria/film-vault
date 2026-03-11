@@ -2,16 +2,19 @@ import { useEffect } from "react";
 import MovieCard from "./MovieCard";
 import CardGridSkeleton from "./skeletons/CardGridSkeleton";
 import { useMovies } from "../contexts/MoviesContext";
+import { useTranslation } from "react-i18next";
 
 const MovieCardGrid = () => {
     const { movies, loading, fetchMovies, search, searchMovies, page, setPage, activeTab, totalPages, totalResults } =
         useMovies();
 
+    const { i18n, t } = useTranslation();
+
     const titles = {
-        popular: "Popular Movies",
-        top_rated: "Top Rated Movies",
-        upcoming: "Upcoming Movies",
-        search: "Search Results",
+        popular: t("main.cardGrid.movies.popular"),
+        top_rated: t("main.cardGrid.movies.topRated"),
+        upcoming: t("main.cardGrid.movies.upcoming"),
+        search: t("main.cardGrid.searchResults"),
     };
 
     useEffect(() => {
@@ -20,7 +23,7 @@ const MovieCardGrid = () => {
         } else {
             fetchMovies();
         }
-    }, [page, search, activeTab]);
+    }, [page, search, activeTab, i18n.language]);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });

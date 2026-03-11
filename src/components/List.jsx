@@ -5,6 +5,7 @@ import CardGridSkeleton from "./skeletons/CardGridSkeleton";
 import { useMovies } from "../contexts/MoviesContext";
 import { useSeries } from "../contexts/SeriesContext";
 import { useList } from "../contexts/ListContext";
+import { useTranslation } from "react-i18next";
 
 const List = () => {
     const { list, clearList } = useList();
@@ -13,6 +14,8 @@ const List = () => {
     const [movies, setMovies] = useState([]);
     const [series, setSeries] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    const { i18n, t } = useTranslation();
 
     useEffect(() => {
         const load = async () => {
@@ -25,7 +28,7 @@ const List = () => {
         };
 
         load();
-    }, [list]);
+    }, [list, i18n.language]);
 
     return (
         <section className="flex flex-col gap-8">
@@ -33,27 +36,25 @@ const List = () => {
                 <CardGridSkeleton />
             ) : (
                 <>
-                    <div className="flex justify-between">
-                        <h2 className="text-2xl font-bold">Favorites List</h2>
+                    <div className="flex items-center justify-between gap-4">
+                        <h2 className="text-2xl font-bold">{t("main.list.title")}</h2>
                         <button
                             disabled={movies.length === 0 && series.length === 0}
                             className="accent-button"
                             onClick={() => {
-                                if (window.confirm("Clear your favorites list?")) {
+                                if (window.confirm(t("main.list.clear.alert"))) {
                                     clearList();
                                 }
                             }}
                         >
-                            Clear List
+                            {t("main.list.clear.button")}
                         </button>
                     </div>
 
                     {movies.length === 0 && series.length === 0 ? (
                         <div className="mt-20">
-                            <h2 className="text-center font-semibold text-xl mb-2">No favorites yet!</h2>
-                            <h3 className="text-center text-secundary-text">
-                                Click the Add button on any movie or series page to add it to your list.
-                            </h3>
+                            <h2 className="text-center font-semibold text-xl mb-2">{t("main.list.description1")}</h2>
+                            <h3 className="text-center text-secundary-text">{t("main.list.description2")}</h3>
                         </div>
                     ) : (
                         <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] place-items-center gap-8">

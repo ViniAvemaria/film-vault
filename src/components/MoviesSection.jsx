@@ -3,15 +3,17 @@ import MovieCarousel from "./MovieCarousel";
 import MovieCardGrid from "./MovieCardGrid";
 import { useMovies } from "../contexts/MoviesContext";
 import List from "./List";
+import { useTranslation } from "react-i18next";
 
 const MoviesSection = () => {
     const { activeTab, fetchPopular, fetchTopRated, fetchUpcoming, setPage } = useMovies();
+    const { i18n } = useTranslation();
 
     useEffect(() => {
         fetchPopular();
         fetchTopRated();
         fetchUpcoming();
-    }, []);
+    }, [i18n.language]);
 
     useEffect(() => {
         if (activeTab !== "home") {

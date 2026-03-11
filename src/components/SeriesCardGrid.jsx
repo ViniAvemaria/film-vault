@@ -2,16 +2,19 @@ import { useEffect } from "react";
 import SeriesCard from "./SeriesCard";
 import CardGridSkeleton from "./skeletons/CardGridSkeleton";
 import { useSeries } from "../contexts/SeriesContext";
+import { useTranslation } from "react-i18next";
 
 const SeriesCardGrid = () => {
     const { series, loading, fetchSeries, search, searchSeries, page, setPage, activeTab, totalPages, totalResults } =
         useSeries();
 
+    const { i18n, t } = useTranslation();
+
     const titles = {
-        popular: "Popular Series",
-        top_rated: "Top Rated Series",
-        on_the_air: "On The Air Series",
-        search: "Search Results",
+        popular: t("main.cardGrid.series.popular"),
+        top_rated: t("main.cardGrid.series.topRated"),
+        on_the_air: t("main.cardGrid.series.onTheAir"),
+        search: t("main.cardGrid.searchResults"),
     };
 
     useEffect(() => {
@@ -20,7 +23,7 @@ const SeriesCardGrid = () => {
         } else {
             fetchSeries();
         }
-    }, [page, search, activeTab]);
+    }, [page, search, activeTab, i18n.language]);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });

@@ -2,16 +2,15 @@ import { createPortal } from "react-dom";
 import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import { useMovies } from "../contexts/MoviesContext";
-import { useSeries } from "../contexts/SeriesContext";
 import { useList } from "../contexts/ListContext";
+import { useTranslation } from "react-i18next";
 
 const MovieDetails = ({ id, setOpenDetails }) => {
-    const { fetchMovieDetails, movieDetails, setMovieDetails, movieLoading, activeTab: moviesTab } = useMovies();
-    const { activeTab: seriesTab } = useSeries();
+    const { fetchMovieDetails, movieDetails, setMovieDetails, movieLoading } = useMovies();
     const [posterLoaded, setPosterLoaded] = useState(false);
     const [bg, setBg] = useState(null);
     const { addItem, removeItem, isInList } = useList();
-    const activeTab = moviesTab === "list" || seriesTab === "list" ? "list" : "";
+    const { t } = useTranslation();
 
     const formatDate = (date) => {
         const [year, month, day] = date.split("-");
@@ -62,7 +61,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
 
                     {bg !== "not_found" && (
                         <div
-                            className="absolute inset-0 bg-cover bg-center blur-sm scale-105"
+                            className="absolute inset-0 bg-cover bg-center blur-sm scale-105 max-[876px]:hidden"
                             style={{
                                 backgroundImage: bg
                                     ? `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url(${bg})`
@@ -91,7 +90,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                     <span className="text-primary-text mr-1">
                                         {movieDetails.vote_average.toFixed(1)}
                                     </span>
-                                    <span>{`(${movieDetails.vote_count.toLocaleString()} votes)`}</span>
+                                    <span>{`(${movieDetails.vote_count.toLocaleString()} ${t("main.details.votes")})`}</span>
                                 </span>
 
                                 <span>
@@ -101,7 +100,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
 
                                 <span>
                                     <i className="fa-solid fa-clock text-accent mr-2"></i>
-                                    {`${movieDetails.runtime} minutes`}
+                                    {`${movieDetails.runtime} ${t("main.details.movies.duration")}`}
                                 </span>
                             </div>
 
@@ -121,7 +120,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                         <i className="fa-solid fa-location-dot text-accent"></i>
                                     </div>
                                     <div>
-                                        <p className="mb-1">Production Countries</p>
+                                        <p className="mb-1">{t("main.details.production")}</p>
                                         {movieDetails.production_countries.map((country) => (
                                             <p key={country.iso_3166_1} className="text-primary-text">
                                                 {country.name}
@@ -135,7 +134,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                         <i className="fa-solid fa-globe text-accent"></i>
                                     </div>
                                     <div>
-                                        <p className="mb-1">Original Language</p>
+                                        <p className="mb-1">{t("main.details.language")}</p>
                                         <p className="text-primary-text">
                                             {getLanguageName(
                                                 movieDetails.original_language === "cn"
@@ -150,7 +149,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                             <div className="flex gap-4 w-80 mt-auto ml-auto max-sm:w-full max-sm:justify-between max-sm:ml-0 max-[876px]:mt-4">
                                 <button
                                     onClick={() => {
-                                        if (isInList(id, "movies") && activeTab === "list") {
+                                        if (isInList(id, "movies")) {
                                             removeItem(id, "movies");
                                         } else {
                                             addItem(id);
@@ -161,12 +160,12 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                     {isInList(id, "movies") ? (
                                         <>
                                             <i className="fa-solid fa-x text-sm mr-2"></i>
-                                            Remove
+                                            {t("main.details.button.remove")}
                                         </>
                                     ) : (
                                         <>
                                             <i className="fa-regular fa-bookmark mr-2"></i>
-                                            Add
+                                            {t("main.details.button.add")}
                                         </>
                                     )}
                                 </button>
@@ -174,7 +173,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                                     onClick={() => setOpenDetails(false)}
                                     className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 cursor-pointer transition-colors duration-300 ease text-card-bg w-full"
                                 >
-                                    Close
+                                    {t("main.details.button.close")}
                                 </button>
                             </div>
                         </div>

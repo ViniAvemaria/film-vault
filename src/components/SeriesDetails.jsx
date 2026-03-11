@@ -2,16 +2,15 @@ import { createPortal } from "react-dom";
 import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import { useSeries } from "../contexts/SeriesContext";
-import { useMovies } from "../contexts/MoviesContext";
 import { useList } from "../contexts/ListContext";
+import { useTranslation } from "react-i18next";
 
 const SeriesDetails = ({ id, setOpenDetails }) => {
-    const { fetchSeriesDetails, seriesDetails, setSeriesDetails, seriesLoading, activeTab: seriesTab } = useSeries();
-    const { activeTab: moviesTab } = useMovies();
+    const { fetchSeriesDetails, seriesDetails, setSeriesDetails, seriesLoading } = useSeries();
     const [posterLoaded, setPosterLoaded] = useState(false);
     const [bg, setBg] = useState(null);
     const { addItem, removeItem, isInList } = useList();
-    const activeTab = moviesTab === "list" || seriesTab === "list" ? "list" : "";
+    const { t } = useTranslation();
 
     const formatDate = (date) => {
         const [year, month, day] = date.split("-");
@@ -62,7 +61,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
 
                     {bg !== "not_found" && (
                         <div
-                            className="absolute inset-0 bg-cover bg-center blur-sm scale-105"
+                            className="absolute inset-0 bg-cover bg-center blur-sm scale-105 max-[876px]:hidden"
                             style={{
                                 backgroundImage: bg
                                     ? `linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url(${bg})`
@@ -91,7 +90,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
                                     <span className="text-primary-text mr-1">
                                         {seriesDetails.vote_average.toFixed(1)}
                                     </span>
-                                    <span>{`(${seriesDetails.vote_count.toLocaleString()} votes)`}</span>
+                                    <span>{`(${seriesDetails.vote_count.toLocaleString()} ${t("main.details.votes")})`}</span>
                                 </span>
 
                                 <span>
@@ -101,7 +100,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
 
                                 <span>
                                     <i className="fa-solid fa-tv text-sm text-accent mr-2"></i>
-                                    {`${seriesDetails.number_of_seasons} seasons • ${seriesDetails.number_of_episodes} episodes`}
+                                    {`${seriesDetails.number_of_seasons} ${t("main.details.series.seasons")} • ${seriesDetails.number_of_episodes} ${t("main.details.series.episodes")}`}
                                 </span>
                             </div>
 
@@ -121,7 +120,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
                                         <i className="fa-solid fa-location-dot text-accent"></i>
                                     </div>
                                     <div>
-                                        <p className="mb-1">Production Countries</p>
+                                        <p className="mb-1">{t("main.details.production")}</p>
                                         {seriesDetails.production_countries.map((country) => (
                                             <p key={country.iso_3166_1} className="text-primary-text">
                                                 {country.name}
@@ -135,7 +134,7 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
                                         <i className="fa-solid fa-globe text-accent"></i>
                                     </div>
                                     <div>
-                                        <p className="mb-1">Original Language</p>
+                                        <p className="mb-1">{t("main.details.language")}</p>
                                         <p className="text-primary-text">
                                             {getLanguageName(seriesDetails.original_language)}
                                         </p>
@@ -143,34 +142,34 @@ const SeriesDetails = ({ id, setOpenDetails }) => {
                                 </div>
                             </div>
 
-                            <div className="flex gap-4 mt-auto ml-auto max-sm:justify-between max-sm:ml-0 max-[876px]:mt-4">
+                            <div className="flex gap-4 w-80 mt-auto ml-auto max-sm:w-full max-sm:justify-between max-sm:ml-0 max-[876px]:mt-4">
                                 <button
                                     onClick={() => {
-                                        if (isInList(id, "series") && activeTab === "list") {
+                                        if (isInList(id, "series")) {
                                             removeItem(id, "series");
                                         } else {
                                             addItem(id);
                                         }
                                     }}
-                                    className="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full"
+                                    className="px-3 py-1.5 rounded-lg bg-accent hover:bg-accent-hover cursor-pointer transition-colors duration-300 ease text-card-bg w-full"
                                 >
                                     {isInList(id, "series") ? (
                                         <>
                                             <i className="fa-solid fa-x text-sm mr-2"></i>
-                                            Remove
+                                            {t("main.details.button.remove")}
                                         </>
                                     ) : (
                                         <>
                                             <i className="fa-regular fa-bookmark mr-2"></i>
-                                            Add
+                                            {t("main.details.button.add")}
                                         </>
                                     )}
                                 </button>
                                 <button
                                     onClick={() => setOpenDetails(false)}
-                                    className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 cursor-pointer transition-colors duration-300 ease text-card-bg max-sm:w-full max-sm:py-2"
+                                    className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 cursor-pointer transition-colors duration-300 ease text-card-bg w-full"
                                 >
-                                    Close
+                                    {t("main.details.button.close")}
                                 </button>
                             </div>
                         </div>

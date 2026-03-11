@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import SmallMovieCard from "./SmallMovieCard";
 import CarouselSkeleton from "./skeletons/CarouselSkeleton";
 import { useMovies } from "../contexts/MoviesContext";
+import { useTranslation } from "react-i18next";
 
 const MovieCarousel = ({ rowName }) => {
     const { popular, topRated, upcoming, popularLoading, topRatedLoading, upcomingLoading, setActiveTab } = useMovies();
@@ -12,10 +13,13 @@ const MovieCarousel = ({ rowName }) => {
     const rowRef = useRef(null);
     const [canLeft, setCanLeft] = useState(false);
     const [canRight, setCanRight] = useState(true);
+
+    const { t } = useTranslation();
+
     const titles = {
-        popular: "Popular Movies",
-        top_rated: "Top Rated Movies",
-        upcoming: "Upcoming Movies",
+        popular: t("main.carousel.movies.popular"),
+        top_rated: t("main.carousel.movies.topRated"),
+        upcoming: t("main.carousel.movies.upcoming"),
     };
 
     const checkScroll = () => {
@@ -42,10 +46,10 @@ const MovieCarousel = ({ rowName }) => {
         <CarouselSkeleton />
     ) : (
         <div>
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center gap-4 mb-6">
                 <h2 className="text-2xl font-bold">{titles[rowName] || ""}</h2>
                 <button onClick={() => setActiveTab(rowName)} className="accent-button">
-                    View All
+                    {t("main.carousel.viewAllButton")}
                 </button>
             </div>
             <div className="flex flex-col relative">

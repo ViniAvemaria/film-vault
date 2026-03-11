@@ -3,15 +3,17 @@ import SeriesCarousel from "./SeriesCarousel";
 import SeriesCardGrid from "./SeriesCardGrid";
 import { useSeries } from "../contexts/SeriesContext";
 import List from "./List";
+import { useTranslation } from "react-i18next";
 
 const SeriesSection = () => {
     const { activeTab, fetchPopular, fetchTopRated, fetchOnAir, setPage } = useSeries();
+    const { i18n } = useTranslation();
 
     useEffect(() => {
         fetchPopular();
         fetchTopRated();
         fetchOnAir();
-    }, []);
+    }, [i18n.language]);
 
     useEffect(() => {
         if (activeTab !== "home") {

@@ -1,4 +1,8 @@
+import { useTranslation } from "react-i18next";
+
 const Footer = () => {
+    const { t } = useTranslation();
+
     return (
         <footer className="flex flex-col items-center py-12 px-10 bg-footer-bg border-t border-border  text-muted-text">
             <section className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-16 w-full justify-items-center-safe max-[1124px]:grid-cols-2 max-[710px]:grid-cols-1">
@@ -6,13 +10,10 @@ const Footer = () => {
                     <h3 translate="no" className="mb-4 text-secundary-text">
                         Film Vault
                     </h3>
-                    <p>
-                        Application to search movies and series using the TMDb API, built to showcase frontend skills
-                        and API integration. Developed by Vinicius de Moura Avemaria.
-                    </p>
+                    <p>{t("footer.description")}</p>
                 </div>
                 <ul className="flex flex-col gap-2 w-80">
-                    <li className="text-secundary-text mb-2">Tech Stack</li>
+                    <li className="text-secundary-text mb-2">{t("footer.techStack")}</li>
                     <li>React.js</li>
                     <li>Tailwind CSS</li>
                     <li>API (TMDb)</li>
@@ -42,13 +43,13 @@ const Footer = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        Repository
+                        {t("footer.techStack")}
                     </a>
                 </div>
             </section>
             <hr className="w-full my-10" />
             <p className="text-center">
-                &copy; {new Date().getFullYear()} Vinicius de Moura Avemaria. All rights reserved.
+                © {new Date().getFullYear()} Vinicius de Moura Avemaria. {t("footer.rights")}
             </p>
         </footer>
     );

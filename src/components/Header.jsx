@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useMovies } from "../contexts/MoviesContext";
 import { useSeries } from "../contexts/SeriesContext";
 import { useSection } from "../contexts/SectionContext";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
     const { activeSection, setActiveSection } = useSection();
@@ -18,6 +19,8 @@ const Header = () => {
     const [openSearch, setOpenSearch] = useState(false);
     const searchRef = useRef(null);
 
+    const { i18n, t } = useTranslation();
+
     useEffect(() => {
         if (openSearch) {
             searchRef.current?.focus();
@@ -32,6 +35,12 @@ const Header = () => {
         }
     }, [openMenu]);
 
+    const toggleLanguage = () => {
+        const newLang = i18n.language === "en-US" ? "pt-BR" : "en-US";
+        localStorage.setItem("lang", newLang);
+        i18n.changeLanguage(newLang);
+    };
+
     return (
         <>
             {openMenu && (
@@ -42,9 +51,12 @@ const Header = () => {
             )}
 
             <header className="flex items-center w-full z-10 bg-secundary-bg/90 backdrop-blur-lg h-20 fixed border-b border-border">
-                <div className="flex justify-between gap-8 max-w-300 w-full mx-auto px-8 max-sm:px-6">
+                <div className="flex justify-between gap-10 max-w-300 w-full mx-auto px-8 max-sm:px-6">
                     {!openSearch && (
-                        <h1 className="text-accent text-3xl font-bold whitespace-nowrap flex items-center">
+                        <h1
+                            translate="no"
+                            className="text-accent text-3xl font-bold whitespace-nowrap flex items-center"
+                        >
                             Film Vault
                         </h1>
                     )}
@@ -67,7 +79,11 @@ const Header = () => {
                                 }
                             }}
                             autoComplete="off"
-                            placeholder="Search for movies..."
+                            placeholder={
+                                activeSection === "movies"
+                                    ? t("header.search.placeholder.movies")
+                                    : t("header.search.placeholder.series")
+                            }
                             className="w-full focus:outline-none text-primary-text pl-1"
                         />
 
@@ -93,17 +109,17 @@ const Header = () => {
                         </button>
                     </div>
 
-                    <nav className="flex gap-4 max-[740px]:hidden">
+                    <nav className="flex gap-4 max-[840px]:hidden">
                         <select
                             className="text-center text-accent bg-secundary-bg border border-border px-2 py-1 rounded-lg cursor-pointer outline-none focus:ring-accent focus:border-accent hover:bg-dark-hover transition-colors duration-300 ease"
                             onChange={(e) => setActiveSection(e.target.value)}
                             value={activeSection}
                         >
                             <option className="bg-secundary-bg" value="movies">
-                                Movies
+                                {t("header.select.movies")}
                             </option>
                             <option className="bg-secundary-bg" value="series">
-                                Series
+                                {t("header.select.series")}
                             </option>
                         </select>
 
@@ -114,9 +130,13 @@ const Header = () => {
                         <button onClick={() => setActiveTab("list")} className="header-icon pt-2.5">
                             <i className="fa-solid fa-list text-lg"></i>
                         </button>
+
+                        <button onClick={toggleLanguage} className="header-icon min-w-11.5 font-semibold">
+                            {i18n.language === "en-US" ? "PT" : "EN"}
+                        </button>
                     </nav>
 
-                    <div className="min-[740px]:hidden flex gap-4">
+                    <div className="min-[840px]:hidden flex gap-4">
                         <button
                             onClick={() => setOpenSearch(true)}
                             className={`${openSearch ? "max-[550px]:hidden" : "min-[550px]:hidden"} text-xl header-icon py-2.5`}
@@ -141,7 +161,7 @@ const Header = () => {
                             className="flex items-center w-full px-5 py-6 cursor-pointer hover:text-accent transition-colors duration-300 ease"
                         >
                             <i className="fa-solid fa-x mr-3 text-sm w-4"></i>
-                            Close
+                            {t("header.navbar.button.close")}
                         </button>
                     </li>
 
@@ -154,7 +174,7 @@ const Header = () => {
                             className="flex items-center w-full px-5 py-6 cursor-pointer hover:text-accent transition-colors duration-300 ease"
                         >
                             <i className="fa-solid fa-house mr-3 text-sm w-4"></i>
-                            Home
+                            {t("header.navbar.button.home")}
                         </button>
                     </li>
 
@@ -167,12 +187,12 @@ const Header = () => {
                             className="flex items-center w-full px-5 py-6 cursor-pointer hover:text-accent transition-colors duration-300 ease"
                         >
                             <i className="fa-solid fa-list mr-3 w-4"></i>
-                            List
+                            {t("header.navbar.button.list")}
                         </button>
                     </li>
 
                     <li className="flex flex-col items-start gap-2">
-                        <h3 className="text-secundary-text px-5 py-2 mt-2">Select Section: </h3>
+                        <h3 className="text-secundary-text px-5 py-2 mt-2">{`${t("header.navbar.section.title")}:`}</h3>
                         <button
                             onClick={() => setActiveSection("movies")}
                             className={`flex items-center px-5 py-2 w-full cursor-pointer transition-colors duration-150 ease ${activeSection === "movies" && "text-accent"}`}
@@ -180,7 +200,7 @@ const Header = () => {
                             <span
                                 className={`block w-1.5 h-1.5 rounded-lg mr-2 bg-accent transition-opacity duration-150 ease ${activeSection === "movies" ? "opacity-100" : "opacity-0"}`}
                             />
-                            Movies
+                            {t("header.navbar.section.movies")}
                         </button>
 
                         <button
@@ -190,7 +210,30 @@ const Header = () => {
                             <span
                                 className={`block w-1.5 h-1.5 rounded-lg mr-2 bg-accent transition-opacity duration-150 ease ${activeSection === "series" ? "opacity-100" : "opacity-0"}`}
                             />
-                            Series
+                            {t("header.navbar.section.series")}
+                        </button>
+                    </li>
+
+                    <li className="border-t border-border mt-2">
+                        <h3 className="text-secundary-text px-5 py-2 mt-2">{`${t("header.navbar.language.title")}:`}</h3>
+                        <button
+                            onClick={() => i18n.changeLanguage("pt-BR")}
+                            className={`flex items-center px-5 py-2 w-full cursor-pointer transition-colors duration-150 ease ${i18n.language === "pt-BR" && "text-accent"}`}
+                        >
+                            <span
+                                className={`block w-1.5 h-1.5 rounded-lg mr-2 bg-accent transition-opacity duration-150 ease ${i18n.language === "pt-BR" ? "opacity-100" : "opacity-0"}`}
+                            />
+                            {t("header.navbar.language.ptBR")}
+                        </button>
+
+                        <button
+                            onClick={() => i18n.changeLanguage("en-US")}
+                            className={`flex items-center px-5 py-2 w-full cursor-pointer transition-colors duration-150 ease ${i18n.language === "en-US" && "text-accent"}`}
+                        >
+                            <span
+                                className={`block w-1.5 h-1.5 rounded-lg mr-2 bg-accent transition-opacity duration-150 ease ${i18n.language === "en-US" ? "opacity-100" : "opacity-0"}`}
+                            />
+                            {t("header.navbar.language.enUS")}
                         </button>
                     </li>
                 </ul>

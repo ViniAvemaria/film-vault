@@ -8,7 +8,7 @@ function App() {
     const { activeSection } = useSection();
 
     return (
-        <div className="bg-primary-bg min-h-dvh text-primary-text min-w-90">
+        <div className="bg-primary-bg min-h-dvh text-primary-text min-w-100">
             <Header />
 
             <main className="max-w-300 mx-auto px-8 max-sm:px-6 pt-34 pb-20">

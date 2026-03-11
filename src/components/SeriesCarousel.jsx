@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import SmallSeriesCard from "./SmallSeriesCard";
 import CarouselSkeleton from "./skeletons/CarouselSkeleton";
 import { useSeries } from "../contexts/SeriesContext";
+import { useTranslation } from "react-i18next";
 
 const SeriesCarousel = ({ rowName }) => {
     const { popular, topRated, onAir, popularLoading, topRatedLoading, onAirLoading, setActiveTab } = useSeries();
@@ -11,10 +12,13 @@ const SeriesCarousel = ({ rowName }) => {
     const rowRef = useRef(null);
     const [canLeft, setCanLeft] = useState(false);
     const [canRight, setCanRight] = useState(true);
+
+    const { t } = useTranslation();
+
     const titles = {
-        popular: "Popular Series",
-        top_rated: "Top Rated Series",
-        on_the_air: "On The Air Series",
+        popular: t("main.carousel.series.popular"),
+        top_rated: t("main.carousel.series.topRated"),
+        on_the_air: t("main.carousel.series.onTheAir"),
     };
 
     const checkScroll = () => {
@@ -44,7 +48,7 @@ const SeriesCarousel = ({ rowName }) => {
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-bold">{titles[rowName] || ""}</h2>
                 <button onClick={() => setActiveTab(rowName)} className="accent-button">
-                    View All
+                    {t("main.carousel.viewAllButton")}
                 </button>
             </div>
             <div className="flex flex-col relative">
