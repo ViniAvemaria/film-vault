@@ -81,10 +81,10 @@ const MovieDetails = ({ id, setOpenDetails }) => {
                         <div className="flex flex-col gap-5">
                             <div className="flex flex-col gap-1">
                                 <h2 className="text-3xl font-bold">{movieDetails.title}</h2>
-                                <h3 className="text-lg italic text-secundary-text">{movieDetails.tagline}</h3>
+                                <h3 className="text-lg italic text-secondary-text">{movieDetails.tagline}</h3>
                             </div>
 
-                            <div className="flex flex-wrap items-center gap-4 text-secundary-text">
+                            <div className="flex flex-wrap items-center gap-4 text-secondary-text">
                                 <span>
                                     <i className="fa-solid fa-star text-accent mr-2"></i>
                                     <span className="text-primary-text mr-1">
@@ -114,7 +114,7 @@ const MovieDetails = ({ id, setOpenDetails }) => {
 
                             <p>{movieDetails.overview}</p>
 
-                            <div className="flex flex-wrap gap-4 justify-between text-secundary-text">
+                            <div className="flex flex-wrap gap-4 justify-between text-secondary-text">
                                 <div className="flex gap-2">
                                     <div className="line-h-10">
                                         <i className="fa-solid fa-location-dot text-accent"></i>

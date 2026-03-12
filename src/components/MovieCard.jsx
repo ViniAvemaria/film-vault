@@ -13,7 +13,7 @@ const MovieCard = ({ movie }) => {
             >
                 <div className="relative overflow-hidden aspect-2/3">
                     {!posterLoaded && (
-                        <div className="absolute inset-0 bg-secundary-bg overflow-hidden">
+                        <div className="absolute inset-0 bg-secondary-bg overflow-hidden">
                             <span className="absolute inset-0 animate-shimmer bg-linear-to-r from-transparent via-shimmer to-transparent" />
                         </div>
                     )}
@@ -24,7 +24,7 @@ const MovieCard = ({ movie }) => {
                         alt="Film's poster"
                         onLoad={() => setPosterLoaded(true)}
                     />
-                    <span className="absolute top-0 right-0 flex items-center bg-secundary-bg py-0.75 px-2 rounded-lg m-0.5">
+                    <span className="absolute top-0 right-0 flex items-center bg-secondary-bg py-0.75 px-2 rounded-lg m-0.5">
                         <i className="fa-solid fa-star text-accent mr-1 text-sm"></i>
                         {movie.vote_average.toFixed(1)}
                     </span>
@@ -33,7 +33,7 @@ const MovieCard = ({ movie }) => {
                 <div className="flex items-center min-h-10 min-w-56">
                     <h2 className="font-semibold text-accent line-clamp-2 leading-snug">{movie.title}</h2>
                 </div>
-                <h3 className="text-sm text-secundary-text">{movie.release_date.split("-")[0]}</h3>
+                <h3 className="text-sm text-secondary-text">{movie.release_date.split("-")[0]}</h3>
             </div>
 
             {openDetails && <MovieDetails id={movie.id} setOpenDetails={setOpenDetails} />}

@@ -2,12 +2,12 @@
 
 @theme {
     --color-primary-bg: #0f0f14;
-    --color-secundary-bg: #1a1a23;
+    --color-secondary-bg: #1a1a23;
     --color-footer-bg: #0a0a0f;
     --color-accent: #8b5cf6;
     --color-accent-hover: #7c3aed;
     --color-primary-text: #f3f4f6;
-    --color-secundary-text: #a1a1aa;
+    --color-secondary-text: #a1a1aa;
     --color-muted-text: #71717a;
     --color-border: #2a2a35;
     --color-card-bg: #171720;
@@ -90,7 +90,7 @@
         padding: 7px 12px;
         color: var(--color-accent);
         border: 1px solid var(--color-border);
-        background-color: var(--color-secundary-bg);
+        background-color: var(--color-secondary-bg);
         border-radius: 8px;
         cursor: pointer;
         transition: background-color 0.3s ease;

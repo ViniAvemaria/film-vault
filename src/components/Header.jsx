@@ -50,7 +50,7 @@ const Header = () => {
                 />
             )}
 
-            <header className="flex items-center w-full z-10 bg-secundary-bg/90 backdrop-blur-lg h-20 fixed border-b border-border">
+            <header className="flex items-center w-full z-10 bg-secondary-bg/90 backdrop-blur-lg h-20 fixed border-b border-border">
                 <div className="flex justify-between gap-10 max-w-300 w-full mx-auto px-8 max-sm:px-6">
                     {!openSearch && (
                         <h1
@@ -91,7 +91,7 @@ const Header = () => {
                             type="button"
                             onMouseDown={(e) => e.preventDefault()}
                             onClick={() => setQuery("")}
-                            className="text-secundary-text group-focus-within:text-focus-ring transition-colors duration-300 ease text-sm cursor-pointer px-1"
+                            className="text-secondary-text group-focus-within:text-focus-ring transition-colors duration-300 ease text-sm cursor-pointer px-1"
                         >
                             {query && <i className="fa-solid fa-x"></i>}
                         </button>
@@ -105,20 +105,20 @@ const Header = () => {
                             }}
                             className="cursor-pointer px-1"
                         >
-                            <i className="fa-solid fa-magnifying-glass text-secundary-text group-focus-within:text-accent transition-colors duration-300 ease"></i>
+                            <i className="fa-solid fa-magnifying-glass text-secondary-text group-focus-within:text-accent transition-colors duration-300 ease"></i>
                         </button>
                     </div>
 
                     <nav className="flex gap-4 max-[840px]:hidden">
                         <select
-                            className="text-center text-accent bg-secundary-bg border border-border px-2 py-1 rounded-lg cursor-pointer outline-none focus:ring-accent focus:border-accent hover:bg-dark-hover transition-colors duration-300 ease"
+                            className="text-center text-accent bg-secondary-bg border border-border px-2 py-1 rounded-lg cursor-pointer outline-none focus:ring-accent focus:border-accent hover:bg-dark-hover transition-colors duration-300 ease"
                             onChange={(e) => setActiveSection(e.target.value)}
                             value={activeSection}
                         >
-                            <option className="bg-secundary-bg" value="movies">
+                            <option className="bg-secondary-bg" value="movies">
                                 {t("header.select.movies")}
                             </option>
-                            <option className="bg-secundary-bg" value="series">
+                            <option className="bg-secondary-bg" value="series">
                                 {t("header.select.series")}
                             </option>
                         </select>
@@ -152,7 +152,7 @@ const Header = () => {
             </header>
 
             <nav
-                className={`flex fixed z-20 top-0 right-0 w-64 sm:w-72 h-dvh bg-secundary-bg transition-transform-opacity duration-300 ease ${openMenu ? "opacity-100 pointer-events-auto translate-x-0" : "opacity-0 pointer-events-none translate-x-full"}`}
+                className={`flex fixed z-20 top-0 right-0 w-64 sm:w-72 h-dvh bg-secondary-bg transition-transform-opacity duration-300 ease ${openMenu ? "opacity-100 pointer-events-auto translate-x-0" : "opacity-0 pointer-events-none translate-x-full"}`}
             >
                 <ul className="flex flex-col w-full">
                     <li className="border-b border-border">
@@ -192,7 +192,7 @@ const Header = () => {
                     </li>
 
                     <li className="flex flex-col items-start gap-2">
-                        <h3 className="text-secundary-text px-5 py-2 mt-2">{`${t("header.navbar.section.title")}:`}</h3>
+                        <h3 className="text-secondary-text px-5 py-2 mt-2">{`${t("header.navbar.section.title")}:`}</h3>
                         <button
                             onClick={() => setActiveSection("movies")}
                             className={`flex items-center px-5 py-2 w-full cursor-pointer transition-colors duration-150 ease ${activeSection === "movies" && "text-accent"}`}
@@ -215,7 +215,7 @@ const Header = () => {
                     </li>
 
                     <li className="border-t border-border mt-2">
-                        <h3 className="text-secundary-text px-5 py-2 mt-2">{`${t("header.navbar.language.title")}:`}</h3>
+                        <h3 className="text-secondary-text px-5 py-2 mt-2">{`${t("header.navbar.language.title")}:`}</h3>
                         <button
                             onClick={() => i18n.changeLanguage("pt-BR")}
                             className={`flex items-center px-5 py-2 w-full cursor-pointer transition-colors duration-150 ease ${i18n.language === "pt-BR" && "text-accent"}`}

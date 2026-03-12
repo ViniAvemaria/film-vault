@@ -45,7 +45,7 @@ const SeriesCardGrid = () => {
                 <>
                     <h2 className="text-2xl font-bold">
                         {titles[activeTab]}
-                        {activeTab === "search" && <span className="text-secundary-text">{` (${totalResults})`}</span>}
+                        {activeTab === "search" && <span className="text-secondary-text">{` (${totalResults})`}</span>}
                     </h2>
 
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] place-items-center gap-8">

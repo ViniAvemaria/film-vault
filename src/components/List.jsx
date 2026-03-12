@@ -54,7 +54,7 @@ const List = () => {
                     {movies.length === 0 && series.length === 0 ? (
                         <div className="mt-20">
                             <h2 className="text-center font-semibold text-xl mb-2">{t("main.list.description1")}</h2>
-                            <h3 className="text-center text-secundary-text">{t("main.list.description2")}</h3>
+                            <h3 className="text-center text-secondary-text">{t("main.list.description2")}</h3>
                         </div>
                     ) : (
                         <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] place-items-center gap-8">
